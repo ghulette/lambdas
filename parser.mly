@@ -10,7 +10,7 @@ open Term
 %token FALSE
 %token LAMBDA
 %token DOT
-%token PLUS
+%token PLUS, MINUS
 %token EQUAL
 %token IF
 %token THEN
@@ -23,7 +23,7 @@ open Term
 %left BEGIN END
 %left APP LAMBDA DOT
 %left IF THEN ELSE
-%left PLUS
+%left PLUS MINUS
 %left EQUAL
 
 %%
@@ -42,6 +42,7 @@ expr:
   | TRUE { True }
   | FALSE { False }
   | IF expr THEN expr ELSE expr { If ($2,$4,$6) }
-  | expr PLUS expr { Plus ($1,$3) }
-  | expr EQUAL expr { Eq ($1,$3) }
+  | expr PLUS expr { Binop (Plus,$1,$3) }
+  | expr MINUS expr { Binop (Minus,$1,$3) }
+  | expr EQUAL expr { Binop (Eq,$1,$3) }
 ;

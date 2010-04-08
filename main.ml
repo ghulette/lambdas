@@ -8,6 +8,14 @@ let precedence = "(\\x.\\y.x) 1 2";;
 (* This will return 1 under static scoping, but 2 under dynamic. *)
 let static_vs_dynamic_scope = "\\x.(\\f.((\\x.f 3) 2) (\\y.x)) 1";;
 
+(* Fixed point combinator. *)
+let fix = "\\f.((\\x.f (x x)) (\\x.f (x x)))";;
+
+(* Fixed point combinator for call-by-value. *)
+let fix2 = "\\f.((\\x.f (\\z.(x x) z)) (\\x.f (\\z.(x x) z)))";;
+
+let basic = "(\\x.if 0 = x then 1 else 2) 1";;
+
 (* Main *)
   
 let run_test expr =
@@ -25,7 +33,10 @@ let run_test expr =
 let main () = 
   let tests = [
     precedence;
-    static_vs_dynamic_scope
+    static_vs_dynamic_scope;
+    fix;
+    fix2;
+    basic
   ] in
   List.iter run_test tests
 ;;

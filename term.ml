@@ -1,17 +1,26 @@
 (* Terms *)
 
+type binop =
+  | Plus
+  | Minus
+  | Eq
+
 type t = 
   | Var of string
   | Lambda of string * t
   | Closure of string * t * env
   | App of t * t
   | Num of int
-  | Eq of t * t
-  | Plus of t * t
+  | Binop of binop * t * t
   | True
   | False
   | If of t * t * t
 and env = (string * t) list
+
+let string_of_binop = function
+  | Plus -> "+"
+  | Minus -> "="
+  | Eq -> "="
   
 let rec string_of_term = function
   | Var x -> x
@@ -24,14 +33,11 @@ let rec string_of_term = function
     let s2 = string_of_term t2 in
     "(" ^ s1 ^ " " ^ s2 ^ ")"
   | Num n -> string_of_int n
-  | Eq (t1,t2) -> 
+  | Binop (op,t1,t2) -> 
+    let sop = string_of_binop op in
     let s1 = string_of_term t1 in
     let s2 = string_of_term t2 in
-    "(" ^ s1 ^ "=" ^ s2 ^ ")"
-  | Plus (t1,t2) -> 
-    let s1 = string_of_term t1 in
-    let s2 = string_of_term t2 in
-    "(" ^ s1 ^ "+" ^ s2 ^ ")"
+    "(" ^ s1 ^ sop ^ s2 ^ ")"
   | True -> "true"
   | False -> "false"
   | If (t1,t2,t3) ->

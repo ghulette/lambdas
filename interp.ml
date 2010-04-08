@@ -20,18 +20,13 @@ let rec eval e = function
       | otherwise -> raise Runtime_error
     end
   | Num n -> Num n
-  | Eq (t1,t2) ->
+  | Binop (op,t1,t2) ->
     let v1 = eval e t1 in
     let v2 = eval e t2 in
-    begin match (v1,v2) with
-      | Num n1,Num n2 -> if n1 = n2 then True else False
-      | otherwise -> raise Runtime_error
-    end
-  | Plus (t1,t2) ->
-    let v1 = eval e t1 in
-    let v2 = eval e t2 in
-    begin match (v1,v2) with
-      | Num n1,Num n2 -> Num (n1+n2)
+    begin match (op,v1,v2) with
+      | Eq, Num n1, Num n2 -> if n1 = n2 then True else False
+      | Plus, Num n1, Num n2 -> Num (n1+n2)
+      | Minus, Num n1, Num n2 -> Num (n1-n2)
       | otherwise -> raise Runtime_error
     end
   | True -> True
