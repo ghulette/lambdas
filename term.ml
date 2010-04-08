@@ -3,6 +3,7 @@
 type t = 
   | Var of string
   | Lambda of string * t
+  | Closure of string * t * env
   | App of t * t
   | Num of int
   | Eq of t * t
@@ -10,12 +11,14 @@ type t =
   | True
   | False
   | If of t * t * t
+and env = (string * t) list
   
 let rec string_of_term = function
   | Var x -> x
   | Lambda (x,t) -> 
     let s = string_of_term t in
     "(\\" ^ x ^ "." ^ s ^ ")"
+  | Closure (x,t,e) -> string_of_term (Lambda (x,t))
   | App (t1,t2) -> 
     let s1 = string_of_term t1 in
     let s2 = string_of_term t2 in
