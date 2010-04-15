@@ -1,7 +1,7 @@
 OCAMLMAKEFILE = ./OCamlMakefile
 
 RESULT  = untyped
-SOURCES = env.ml \
+SOURCES = env.mli env.ml \
           term.ml \
 					parser.mly \
 					lexer.mll \

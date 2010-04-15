@@ -2,6 +2,8 @@
 
 exception Not_found
 
+type 'a env = (string * 'a) list
+
 let empty = []
 
 let bind e x v = (x,v) :: e

@@ -8,18 +8,17 @@ type binop =
 type t = 
   | Var of string
   | Lambda of string * t
-  | Closure of string * t * env
+  | Closure of string * t * (t Env.env)
   | App of t * t
   | Num of int
   | Binop of binop * t * t
   | True
   | False
   | If of t * t * t
-and env = (string * t) list
 
 let string_of_binop = function
   | Plus -> "+"
-  | Minus -> "="
+  | Minus -> "-"
   | Eq -> "="
   
 let rec string_of_term = function
