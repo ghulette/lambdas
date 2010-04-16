@@ -3,6 +3,7 @@
 type binop =
   | Plus
   | Minus
+  | Mult
   | Eq
 
 type t = 
@@ -19,6 +20,7 @@ type t =
 let string_of_binop = function
   | Plus -> "+"
   | Minus -> "-"
+  | Mult -> "*"
   | Eq -> "="
   
 let rec string_of_term = function

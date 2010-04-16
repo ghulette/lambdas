@@ -15,6 +15,8 @@ rule tokenizer = parse
   | '\\'       { LAMBDA }
   | '.'        { DOT }
   | '+'        { PLUS }
+  | '-'        { MINUS }
+  | '*'        { MULT }
   | '='        { EQUAL }
   | "true"     { TRUE }
   | "false"    { FALSE }

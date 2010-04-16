@@ -10,7 +10,7 @@ open Term
 %token FALSE
 %token LAMBDA, DOT
 %token LET, IN
-%token PLUS, MINUS
+%token PLUS, MINUS, MULT
 %token EQUAL
 %token IF
 %token THEN
@@ -21,10 +21,11 @@ open Term
 
 %left LET IN
 %left LAMBDA DOT
-%left APP
 %left IF THEN ELSE
 %nonassoc EQUAL
 %left PLUS MINUS
+%left MULT
+%left APP
 %left BEGIN END
 %nonassoc ID NUM TRUE FALSE
 
@@ -47,5 +48,6 @@ expr:
   | IF expr THEN expr ELSE expr { If ($2,$4,$6) }
   | expr PLUS expr { Binop (Plus,$1,$3) }
   | expr MINUS expr { Binop (Minus,$1,$3) }
+  | expr MULT expr { Binop (Mult,$1,$3) }
   | expr EQUAL expr { Binop (Eq,$1,$3) }
 ;

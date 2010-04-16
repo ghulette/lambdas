@@ -1,7 +1,6 @@
 open Env
 open Term
 
-
 (* Interpreter *)
 
 exception Runtime_error
@@ -27,6 +26,7 @@ let rec eval e = function
       | Eq, Num n1, Num n2 -> if n1 = n2 then True else False
       | Plus, Num n1, Num n2 -> Num (n1+n2)
       | Minus, Num n1, Num n2 -> Num (n1-n2)
+      | Mult, Num n1, Num n2 -> Num (n1*n2)
       | otherwise -> raise Runtime_error
     end
   | True -> True
