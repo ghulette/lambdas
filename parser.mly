@@ -19,13 +19,14 @@ open Term
 %start main
 %type <(Term.t option)> main
 
-%left ID NUM TRUE FALSE
-%left BEGIN END
 %left LET IN
-%left APP LAMBDA DOT
+%left LAMBDA DOT
+%left APP
 %left IF THEN ELSE
+%nonassoc EQUAL
 %left PLUS MINUS
-%left EQUAL
+%left BEGIN END
+%nonassoc ID NUM TRUE FALSE
 
 %%
 
@@ -35,7 +36,7 @@ main:
 ;
 
 expr:
-  | expr expr %prec APP { App ($1,$2) }
+  | expr %prec APP expr { App ($1,$2) }
   | BEGIN expr END { $2 }
   | ID { Var $1 }
   | LAMBDA ID DOT expr { Lambda ($2,$4) }

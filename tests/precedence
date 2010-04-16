@@ -1,2 +1,2 @@
--- Application should bind left.
-\x.\y.x 1 2
+-- Application should bind tighter than let/in
+let x = 1 in (\x.x) x
