@@ -1,0 +1,2 @@
+-- Fixed point combinator for call-by-value.
+\f.((\x.f (\z.(x x) z)) (\x.f (\z.(x x) z)))

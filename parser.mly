@@ -8,8 +8,8 @@ open Term
 %token END
 %token TRUE
 %token FALSE
-%token LAMBDA
-%token DOT
+%token LAMBDA, DOT
+%token LET, IN
 %token PLUS, MINUS
 %token EQUAL
 %token IF
@@ -21,6 +21,7 @@ open Term
 
 %left ID NUM TRUE FALSE
 %left BEGIN END
+%left LET IN
 %left APP LAMBDA DOT
 %left IF THEN ELSE
 %left PLUS MINUS
@@ -38,6 +39,7 @@ expr:
   | BEGIN expr END { $2 }
   | ID { Var $1 }
   | LAMBDA ID DOT expr { Lambda ($2,$4) }
+  | LET ID EQUAL expr IN expr { App (Lambda($2,$6),$4) }
   | NUM { Num $1 }
   | TRUE { True }
   | FALSE { False }

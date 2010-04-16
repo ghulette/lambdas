@@ -1,0 +1,2 @@
+-- Application should bind left.
+\x.\y.x 1 2
