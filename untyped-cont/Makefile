@@ -1,6 +1,6 @@
 OCAMLMAKEFILE = ./OCamlMakefile
 
-RESULT  = untyped
+RESULT  = cont
 SOURCES = env.mli env.ml \
           term.ml \
 					parser.mly \

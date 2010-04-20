@@ -12,9 +12,7 @@ let main () =
       let ts = string_of_term t in
       printf "%s => " ts;
       try 
-        let t' = interp t in
-        let ts' = string_of_term t' in
-        printf "%s\n" ts'
+        let _ = interp t in ()
       with Runtime_error ->
         printf "Error\n"
 ;;
