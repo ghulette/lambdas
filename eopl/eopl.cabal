@@ -1,0 +1,12 @@
+Name:           eopl
+Version:        0.1
+Cabal-Version:  >= 1.2
+Author:         Geoff Hulette
+Synopsis:       Various interpreters from EOPL book
+Build-Type:     Simple
+  
+Executable letrec
+  Main-Is:        LetRec/Main.hs
+  Hs-Source-Dirs: src
+  Build-Depends:	base >= 4,array,parsec >= 2,containers
+  GHC-Options:    -O2 -Wall
