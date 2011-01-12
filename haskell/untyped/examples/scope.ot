@@ -1,0 +1,7 @@
+-- This will return 1 under static scoping, but 2 under dynamic.
+-- Should parse as \x.(\f.((\x.f 3) $ 2) $ (\y.x)) $ 1
+
+let x = 1 in
+let f = \y . x in
+let x = 2 in
+f $ 3

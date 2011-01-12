@@ -1,0 +1,12 @@
+Name:           Untyped
+Version:        0.1
+Cabal-Version:  >= 1.2
+License:        BSD3
+Author:         Geoff Hulette
+Build-Type:     Simple
+  
+Executable untyped
+  Main-Is:        Main.hs
+  Hs-Source-Dirs: src
+  Build-Depends:	base >= 4,array,parsec >= 2,containers,binary
+  GHC-Options:    -O2 -Wall
