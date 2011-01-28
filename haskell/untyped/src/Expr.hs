@@ -5,29 +5,37 @@ import Data.Binary
 import Env
 
 data Binop = Add
-           | Mult
+           | Sub
+           | Mul
            | Eq
+           | Lt
            | Seq
            deriving Eq
 
 instance Show Binop where
-  show Add  = "+"
-  show Mult = "*"
-  show Eq   = "="
-  show Seq  = ";"
+  show Add = "+"
+  show Sub = "-"
+  show Mul = "*"
+  show Eq  = "="
+  show Lt  = "<"
+  show Seq = ";"
 
 instance Binary Binop where
-  put Add  = put (0 :: Word8)
-  put Mult = put (1 :: Word8)
-  put Eq   = put (2 :: Word8)
-  put Seq  = put (3 :: Word8)
+  put Add = put (0 :: Word8)
+  put Sub = put (1 :: Word8)
+  put Mul = put (2 :: Word8)
+  put Eq  = put (3 :: Word8)
+  put Lt  = put (4 :: Word8)
+  put Seq = put (5 :: Word8)
   get = do 
     tag <- getWord8
     case tag of
       0 -> return Add
-      1 -> return Mult
-      2 -> return Eq
-      3 -> return Seq
+      1 -> return Sub
+      2 -> return Mul
+      3 -> return Eq
+      4 -> return Lt
+      5 -> return Seq
       _ -> error "Decoding Binop"
 
 data Expr = Lambda String Expr
@@ -39,7 +47,7 @@ data Expr = Lambda String Expr
           | Binop Binop Expr Expr
           | If Expr Expr Expr
           | Print Expr
-          | Error
+          | Error String
           deriving Eq
 
 instance Binary Expr where
@@ -52,7 +60,7 @@ instance Binary Expr where
   put (Binop op e1 e2)  = put (6 :: Word8) >> put op >> put e1 >> put e2
   put (If e1 e2 e3)     = put (7 :: Word8) >> put e1 >> put e2 >> put e3
   put (Print e)         = put (8 :: Word8) >> put e
-  put Error             = put (9 :: Word8)
+  put (Error msg)       = put (9 :: Word8) >> put msg
   get = do 
     tag <- getWord8
     case tag of
@@ -65,7 +73,7 @@ instance Binary Expr where
       6 -> liftM3 Binop get get get
       7 -> liftM3 If get get get
       8 -> liftM Print get
-      9 -> return Error
+      9 -> liftM Error get
       _ -> error "Decoding Expr"
 
 instance Show Expr where
@@ -83,4 +91,4 @@ instance Show Expr where
                        " then " ++ (show e2) ++ 
                        " else " ++ (show e3) ++ ")"
   show (Print e) = "(print " ++ (show e) ++ ")"
-  show (Error) = "(ERROR)"
+  show (Error msg) = "(error: " ++ (show msg) ++ ")"

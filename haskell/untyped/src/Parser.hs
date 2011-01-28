@@ -65,9 +65,11 @@ expr = Ex.buildExpressionParser table factor
   where infixOp x f = Ex.Infix (reservedOp x >> return f)
         table = [[infixOp ";" (Binop Seq) Ex.AssocLeft],
                  [infixOp "$" App Ex.AssocLeft],
-                 [infixOp "*" (Binop Mult) Ex.AssocLeft],
-                 [infixOp "+" (Binop Add) Ex.AssocLeft],
-                 [infixOp "=" (Binop Eq) Ex.AssocLeft]]
+                 [infixOp "*" (Binop Mul) Ex.AssocLeft],
+                 [infixOp "+" (Binop Add) Ex.AssocLeft,
+                  infixOp "-" (Binop Sub) Ex.AssocLeft],
+                 [infixOp "=" (Binop Eq) Ex.AssocLeft,
+                  infixOp "<" (Binop Lt) Ex.AssocLeft]]
         factor =  parens expr
               <|> variable
               <|> literalTrue
